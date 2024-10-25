@@ -1,0 +1,106 @@
+type LocationProduct {
+  product: Product
+  location: Location
+  quantity: Int
+  lastChecked: String
+  expirationDate: String
+  comments: String
+  batchNumber: String
+  receivedDate: String
+  createdAt: String
+  updatedAt: String
+  createdBy: String
+  updatedBy: String
+  uuid: String
+  deletedAt: String
+  deletedBy: String
+  deleted: Boolean
+  deletedReason: String
+  deletedNote: String
+  status: String
+}
+
+type LocationData {
+  uuid: String
+  name: String
+  area: Area
+  warehouse: Warehouse
+  rack: Rack
+  shelf: Shelf
+  bin: Bin
+}
+
+type LocationProductDetails {
+  product: Product
+  location: LocationData
+  quantity: Int
+  onUsed: Int
+  lastChecked: String
+  expirationDate: String
+  comments: String
+  batchNumber: String
+  receivedDate: String
+  createdAt: String
+  updatedAt: String
+  createdBy: String
+  updatedBy: String
+  uuid: String
+  deletedAt: String
+  deletedBy: String
+  deleted: Boolean
+  deletedReason: String
+  deletedNote: String
+  status: String
+}
+
+input LocationProductDeleteInput {
+  uuid: String!
+  reason: String!
+  note: String!
+}
+
+input LocationProductInput {
+  product: String
+  location: String
+  quantity: Int
+  lastChecked: String
+  expirationDate: String
+  comments: String
+  batchNumber: String
+  receivedDate: String
+  uuid: String
+  status: String
+}
+
+type ProductInWarehouseUnit {
+  product: Product
+  warehouse: String
+}
+
+type LocationProductList {
+  locationProducts: [LocationProduct]
+  hasMore: Boolean
+}
+
+type ProductInWarehouseList {
+  productInWarehouse: [ProductInWarehouseUnit]
+  hasMore: Boolean
+}
+
+type LocationProductDetailsList {
+  locationProductDetails: [LocationProductDetails]
+  hasMore: Boolean
+}
+
+type Query {
+  locationProduct(uuid: String!): LocationProduct
+  locationProductList(first: Int, after: Int, filters: LocationProductInput): LocationProductList
+  locationProductDetailsList(first: Int, after: Int, filters: LocationProductInput): LocationProductDetailsList
+  productsForWarehouse(first: Int, after: Int, filters: ProductInput, warehouse: String!): ProductInWarehouseList
+}
+
+type Mutation {
+  locationProductCreate(locationProduct: LocationProductInput!): LocationProduct
+  locationProductUpdate(locationProduct: LocationProductInput!): LocationProduct
+  locationProductDelete(locationProduct: LocationProductDeleteInput!): LocationProduct
+}

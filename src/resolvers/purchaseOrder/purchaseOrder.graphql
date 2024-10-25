@@ -1,0 +1,92 @@
+type PurchasingSource {
+    uuid: String
+    deleted: String
+    deletedAt: String
+    deletedBy: String
+    createdBy: String
+    updatedBy: String
+    deletedReason: String
+    deletedNote: String
+    company_name: String
+    first_name: String
+    last_name: String
+    email: String
+    phone: String
+    default_ship: String
+    dealer_number: String
+}
+
+type PurchaseOrderAddress {
+    street: String
+    city: String
+    region: String
+    postal_code: String
+    country: String
+}
+
+type PurchaseOrder {
+    uuid: String
+    deleted: String
+    deletedAt: String
+    deletedBy: String
+    createdBy: String
+    updatedBy: String
+    deletedReason: String
+    deletedNote: String
+    project: Project
+    purchasingSource: PurchasingSource
+    custom_id: String
+    default_ship: String
+    notes: String
+    status: String
+    shipping_option: String
+    ship_name: String
+    ship_address: PurchaseOrderAddress
+}
+
+input PurchaseOrderInput {
+    uuid: String!
+}
+
+type PurchaseOrderList {
+    purchaseOrders: [PurchaseOrder]
+    hasMore: Boolean
+}
+
+type PurchaseOrderItemSource {
+    id: String
+    name: String
+}
+
+type PurchaseOrderItem {
+    uuid: String
+    deleted: String
+    deletedAt: String
+    deletedBy: String
+    createdBy: String
+    updatedBy: String
+    deletedReason: String
+    deletedNote: String
+    product: Product
+    full_name: String
+    short_description: String
+    order_status: String
+    order_notes: String
+    cost: String
+    total_order_cost: String
+    project_quantity: Int
+    order_quantity: Int
+    received_quantity: Int
+    source: PurchaseOrderItemSource
+}
+
+type PurchaseOrderItemsList {
+    purchaseOrderItems: [PurchaseOrderItem]
+    hasMore: Boolean
+}
+
+type Query {
+  purchaseOrder(uuid: String!): PurchaseOrder
+  purchaseOrderList(filters: PurchaseOrderInput, first: Int, after: Int, textSearchFilters: PurchaseOrderInput): PurchaseOrderList
+  purchaseOrderItemsList(purchaseOrderId: String, first: Int, after: Int): PurchaseOrderItemsList
+}

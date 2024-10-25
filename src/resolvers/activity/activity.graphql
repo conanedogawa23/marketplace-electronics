@@ -1,0 +1,80 @@
+type ActivityLogTrack {
+    product: String
+    quantity: Int
+    deleteSerialNumbers: Boolean
+    serialNumbers: [String]
+    fromLocation: String
+    toLocation: String
+    project: String
+}
+
+type ActivityLogList {
+    activityLogs: [ActivityLog]
+    hasMore: Boolean
+}
+
+input ActivityLogInput {
+    activityId: String
+    description: String
+    name: String
+    type: String
+    status: String
+    note: String
+    createdBy: String
+    updatedBy: String
+    deletedBy: String
+    deletedReason: String
+    deletedNote: String
+    deletedAt: String
+    createdAt: String
+    updatedAt: String
+    deleted: Boolean
+    uuid: String
+    track: [ActivityLogTrackInput]
+    warehouse: String
+    project: String
+}
+
+input ActivityLogTrackInput {
+    product: String
+    quantity: Int
+    deleteSerialNumbers: Boolean
+    serialNumbers: [String]
+    fromLocation: String
+    toLocation: String
+    project: String
+}
+
+type ActivityLog {
+    uuid: String
+    activityId: String
+    activityReason: String
+    description: String
+    name: String
+    type: String
+    note: String
+    status: String
+    createdAt: String
+    createdBy: String
+    updatedAt: String
+    updatedBy: String
+    deleted: Boolean
+    deletedAt: String
+    deletedBy: String
+    deletedReason: String
+    deletedNote: String
+    warehouse: String
+    project: String
+    track: [ActivityLogTrack]
+}
+
+type Query {
+    activityLog(uuid: String!): ActivityLog
+    activityLogList(first: Int, after: Int, filters: ActivityLogInput): ActivityLogList
+}
+
+type Mutation {
+    createActivityLog(activity: ActivityLogInput!): ActivityLog
+    updateActivityLog(activity: ActivityLogInput!): ActivityLog
+    deleteActivityLog(uuid: String!): ActivityLog
+}

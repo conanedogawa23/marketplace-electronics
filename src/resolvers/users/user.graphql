@@ -1,0 +1,118 @@
+type Address {
+  street: String
+  city: String
+  state: String
+  zipCode: String
+  country: String
+}
+
+type User {
+  _id: ID
+  uuid: String
+  firstName: String
+  lastName: String
+  email: String
+  phoneNumber: String
+  dateOfBirth: String # Dates are typically represented as strings in GraphQL and formatted according to the ISO 8601 standard
+  address: Address
+  employeeId: String
+  department: String
+  position: String
+  salary: Float # GraphQL does not have a specific type for currency, so a Float can be used for monetary values
+  hireDate: String
+  employmentStatus: String
+  role: String
+  createdAt: String # Timestamps are also represented as strings
+  updatedAt: String
+  deleted: Boolean
+  deletedAt: String
+  projects: [String]
+  deletedReason: String
+  deletedNote: String
+  permissions: [String]
+  admin: Boolean
+  image: String
+}
+
+type UserList {
+  _id: ID!
+  uuid: String
+  firstName: String!
+  lastName: String!
+  email: String!
+  phoneNumber: String
+  dateOfBirth: String # Dates are typically represented as strings in GraphQL and formatted according to the ISO 8601 standard
+  address: Address
+  employeeId: String
+  department: Department
+  position: String!
+  salary: Float # GraphQL does not have a specific type for currency, so a Float can be used for monetary values
+  hireDate: String
+  employmentStatus: String
+  role: UserRole
+  createdAt: String! # Timestamps are also represented as strings
+  updatedAt: String!
+  deleted: Boolean
+  projects: [Project]
+  permissions: [Permission]
+  deletedAt: String
+  admin: Boolean
+}
+
+input UserInput {
+  _id: ID
+  uuid: String
+  password: String
+  firstName: String
+  lastName: String
+  email: String
+  phoneNumber: String
+  dateOfBirth: String
+  address: AddressInput
+  employeeId: String
+  department: String
+  position: String
+  salary: Float
+  hireDate: String
+  employmentStatus: String
+  role: String
+  createdAt: String
+  updatedAt: String
+  permissions: [String]
+  projects: [String]
+  admin: Boolean
+  image: String
+}
+
+type UserPwdUpdate {
+  message: String
+  password: String
+}
+
+input UserPwdUpdateInput {
+  _id: ID!
+  newPassword: String!
+}
+
+input UserDeleteInput {
+    uuid: String!
+    reason: String!
+    note: String!
+}
+
+type UserListPaginated {
+    users: [User]
+    hasMore: Boolean
+}
+
+type Query {
+  user(_id: ID!): User
+  userList(first: Int, after: Int, filter: UserInput, textSearchFilters: UserInput): UserListPaginated
+}
+
+type Mutation {
+  createUser(user: UserInput!): User
+  updateUser(user: UserInput!): User
+  deleteUser(user: UserDeleteInput!): User
+  resetPassword(newPwdData: UserPwdUpdateInput!): UserPwdUpdate
+}

@@ -1,0 +1,46 @@
+type Department {
+    _id: ID
+    uuid: String!
+    name: String!
+    description: String!
+    createdAt: String!
+    updatedAt: String!
+    deleted: Boolean
+    deletedAt: String
+    deletedBy: String
+    deletedReason: String
+    deletedNote: String
+    createdBy: String
+    updatedBy: String
+    status: String!
+}
+
+input DepartmentInput {
+    _id: ID
+    uuid: String
+    name: String
+    description: String
+    status: String
+}
+
+input DepartmentDeleteInput {
+    uuid: String!
+    reason: String!
+    note: String!
+}
+
+type DepartmentList {
+    departments: [Department]
+    hasMore: Boolean
+}
+
+type Query {
+  department(uuid: String!): Department
+  departmentList(first: Int, after: Int, filters: DepartmentInput, textSearchFilters: DepartmentInput): DepartmentList
+}
+
+type Mutation {
+    departmentCreate(department: DepartmentInput!): Department
+    departmentUpdate(department: DepartmentInput!): Department
+    departmentDelete(department: DepartmentDeleteInput!): Department
+}

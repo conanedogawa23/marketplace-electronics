@@ -1,0 +1,46 @@
+type Manufacturer {
+    _id: ID
+    uuid: String
+    name: String
+    description: String
+    createdAt: String
+    updatedAt: String
+    deleted: Boolean
+    deletedAt: String
+    deletedBy: String
+    deletedReason: String
+    deletedNote: String
+    createdBy: String
+    updatedBy: String
+    status: String
+}
+
+input ManufacturerInput {
+    _id: ID
+    uuid: String
+    name: String
+    description: String
+    status: String
+}
+
+input ManufacturerDeleteInput {
+    uuid: String!
+    reason: String!
+    note: String!
+}
+
+type ManufacturerList {
+    manufacturer: [Manufacturer]
+    hasMore: Boolean
+}
+
+type Query {
+  manufacturer(uuid: String!): Manufacturer
+  manufacturerList(first: Int, after: Int, filters: ManufacturerInput, textSearchFilters: ManufacturerInput): ManufacturerList
+}
+
+type Mutation {
+    manufacturerCreate(manufacturer: ManufacturerInput!): Manufacturer
+    manufacturerUpdate(manufacturer: ManufacturerInput!): Manufacturer
+    manufacturerDelete(manufacturer: ManufacturerDeleteInput!): Manufacturer
+}

@@ -1,0 +1,46 @@
+type Category {
+    _id: ID
+    uuid: String
+    name: String
+    description: String
+    createdAt: String
+    updatedAt: String
+    deleted: Boolean
+    deletedAt: String
+    deletedBy: String
+    deletedReason: String
+    deletedNote: String
+    createdBy: String
+    updatedBy: String
+    status: String
+}
+
+input CategoryInput {
+    _id: ID
+    uuid: String
+    name: String
+    description: String
+    status: String
+}
+
+input CategoryDeleteInput {
+    uuid: String!
+    reason: String!
+    note: String!
+}
+
+type CategoryList {
+    categories: [Category]
+    hasMore: Boolean
+}
+
+type Query {
+  category(uuid: String!): Category
+  categoryList(first: Int, after: Int, filters: CategoryInput, textSearchFilters: CategoryInput): CategoryList
+}
+
+type Mutation {
+    categoryCreate(category: CategoryInput!): Category
+    categoryUpdate(category: CategoryInput!): Category
+    categoryDelete(category: CategoryDeleteInput!): Category
+}

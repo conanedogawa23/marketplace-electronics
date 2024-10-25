@@ -1,0 +1,261 @@
+type Location {
+  _id: ID
+  uuid: String
+  name: String
+  description: String
+  type: LocationTypes
+  area: String
+  rack: String
+  shelf: String
+  bin: String
+  deletedAt: String
+  deletedBy: String
+  deleted: Boolean
+  deletedReason: String
+  deletedNote: String
+  status: String
+  createdAt: String!
+  updatedAt: String!
+  warehouse: String
+}
+
+enum LocationTypes {
+  company
+  project
+}
+
+input LocationDeleteInput {
+  uuid: String!
+  reason: String!
+  note: String!
+}
+
+input LocationInput {
+  name: String
+  description: String
+  type: String
+  area: String
+  rack: String
+  shelf: String
+  bin: String
+  uuid: String
+  status: String
+  warehouse: String
+}
+
+type LocationList {
+  locations: [Location]
+  hasMore: Boolean
+}
+
+type Warehouse {
+  uuid: String
+  name: String
+  description: String
+  status: String
+  createdAt: String!
+  updatedAt: String!
+  createdBy: String
+  updatedBy: String
+  deleted: Boolean
+  deletedAt: String
+  deletedBy: String
+  deletedReason: String
+  deletedNote: String
+  address: String
+}
+
+input WarehouseInput {
+  name: String
+  description: String
+  status: String
+  address: String
+  uuid: String
+}
+
+type WarehouseList {
+  warehouses: [Warehouse]
+  hasMore: Boolean
+}
+
+input WarehouseDeleteInput {
+  uuid: String!
+  reason: String!
+  note: String!
+}
+
+type Area {
+  uuid: String
+  name: String
+  description: String
+  status: String
+  createdAt: String!
+  updatedAt: String!
+  createdBy: String
+  updatedBy: String
+  deleted: Boolean
+  deletedAt: String
+  deletedBy: String
+  deletedReason: String
+  deletedNote: String
+  warehouse: String
+}
+
+input AreaInput {
+  name: String
+  description: String
+  status: String
+  warehouse: String
+  uuid: String
+}
+
+input AreaDeleteInput {
+  uuid: String!
+  reason: String!
+  note: String!
+}
+
+type AreaList {
+  areas: [Area]
+  hasMore: Boolean
+}
+
+type Rack {
+  uuid: String
+  name: String
+  description: String
+  status: String
+  createdAt: String!
+  updatedAt: String!
+  createdBy: String
+  updatedBy: String
+  deleted: Boolean
+  deletedAt: String
+  deletedBy: String
+  deletedReason: String
+  deletedNote: String
+  area: String
+}
+
+input RackInput {
+  name: String
+  description: String
+  status: String
+  area: String
+  uuid: String
+}
+
+input RackDeleteInput {
+  uuid: String!
+  reason: String!
+  note: String!
+}
+
+type RackList {
+  racks: [Rack]
+  hasMore: Boolean
+}
+
+type Shelf {
+  uuid: String
+  name: String
+  description: String
+  status: String
+  createdAt: String!
+  updatedAt: String!
+  createdBy: String
+  updatedBy: String
+  deleted: Boolean
+  deletedAt: String
+  deletedBy: String
+  deletedReason: String
+  deletedNote: String
+  rack: String
+}
+
+input ShelfInput {
+  name: String
+  description: String
+  status: String
+  rack: String
+  uuid: String
+}
+
+input ShelfDeleteInput {
+  uuid: String!
+  reason: String!
+  note: String!
+}
+
+type ShelfList {
+  shelves: [Shelf]
+  hasMore: Boolean
+}
+
+type Bin {
+  uuid: String
+  name: String
+  description: String
+  status: String
+  createdAt: String!
+  updatedAt: String!
+  createdBy: String
+  updatedBy: String
+  deleted: Boolean
+  deletedAt: String
+  deletedBy: String
+  deletedReason: String
+  deletedNote: String
+  shelf: String
+}
+
+input BinInput {
+  name: String
+  description: String
+  status: String
+  shelf: String
+  uuid: String
+}
+
+input BinDeleteInput {
+  uuid: String!
+  reason: String!
+  note: String!
+}
+
+type BinList {
+  bins: [Bin]
+  hasMore: Boolean
+}
+
+type Query {
+  location(uuid: String!): Location
+  locationList(first: Int, after: Int, filters: LocationInput, textSearchFilters: LocationInput): LocationList
+  locationTypes: [String]
+  warehouseList(first: Int, after: Int, filters: WarehouseInput, textSearchFilters: WarehouseInput): WarehouseList
+  areaList (first: Int, after: Int, filters: AreaInput, textSearchFilters: AreaInput): AreaList
+  rackList (first: Int, after: Int, filters: RackInput): RackList
+  shelfList (first: Int, after: Int, filters: ShelfInput): ShelfList
+  binList (first: Int, after: Int, filters: BinInput): BinList
+}
+
+type Mutation {
+  locationCreate(location: LocationInput!): Location
+  locationUpdate(location: LocationInput!): Location
+  locationDelete(location: LocationDeleteInput!): Location
+  warehouseCreate(warehouse: WarehouseInput!): Warehouse
+  warehouseUpdate(warehouse: WarehouseInput!): Warehouse
+  warehouseDelete(warehouse: WarehouseDeleteInput!): Warehouse
+  areaCreate(area: AreaInput!): Area
+  areaUpdate(area: AreaInput!): Area
+  areaDelete(area: AreaDeleteInput!): Area
+  rackCreate(rack: RackInput!): Rack
+  rackUpdate(rack: RackInput!): Rack
+  rackDelete(rack: RackDeleteInput!): Rack
+  shelfCreate(shelf: ShelfInput!): Shelf
+  shelfUpdate(shelf: ShelfInput!): Shelf
+  shelfDelete(shelf: ShelfDeleteInput!): Shelf
+  binCreate(bin: BinInput!): Bin
+  binUpdate(bin: BinInput!): Bin
+  binDelete(bin: BinDeleteInput!): Bin
+}

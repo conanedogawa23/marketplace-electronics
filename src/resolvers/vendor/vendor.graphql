@@ -1,0 +1,52 @@
+type Vendor {
+    _id: ID
+    uuid: String
+    name: String
+    description: String
+    createdAt: String
+    updatedAt: String
+    deleted: Boolean
+    deletedAt: String
+    deletedBy: String
+    deletedReason: String
+    deletedNote: String
+    createdBy: String
+    updatedBy: String
+    status: String
+    email: String
+    phoneNumber: String
+    source: String
+}
+
+input VendorInput {
+    _id: ID
+    uuid: String
+    name: String
+    description: String
+    status: String
+    email: String
+    phoneNumber: String
+    source: String
+}
+
+input VendorDeleteInput {
+    uuid: String!
+    reason: String!
+    note: String!
+}
+
+type VendorList {
+    vendors: [Vendor]
+    hasMore: Boolean
+}
+
+type Query {
+  vendor(uuid: String!): Vendor
+  vendorList(filters: VendorInput, first: Int, after: Int, textSearchFilters: VendorInput): VendorList
+}
+
+type Mutation {
+    vendorCreate(vendor: VendorInput!): Vendor
+    vendorUpdate(vendor: VendorInput!): Vendor
+    vendorDelete(vendor: VendorDeleteInput!): Vendor
+}

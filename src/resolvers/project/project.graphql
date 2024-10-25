@@ -1,0 +1,127 @@
+enum ClientType {
+    subclient
+    client
+}
+
+type Client {
+    uuid: String
+    name: String
+    type: ClientType
+}
+
+type Project {
+    _id: ID
+    uuid: String
+    name: String
+    description: String
+    createdAt: String
+    updatedAt: String
+    deleted: Boolean
+    deletedAt: String
+    deletedBy: String
+    deletedReason: String
+    deletedNote: String
+    createdBy: String
+    updatedBy: String
+    status: String
+    project_type: String
+    stage: String
+    payment_schedule: String
+    sales_tax: String
+    labor_tax: String
+    total_margin: String
+    equipment_margin: String
+    equipment_total: String
+    labor_total: String
+    shipping_total: String
+    tax_total: String
+    budget: String
+    address: String
+    city: String
+    state: String
+    zipcode: String
+    country: String
+    owner: User
+    client: Client
+    primary_contact_id: String
+    company_location_id: String
+    company_location_name: String
+}
+
+input ProjectInput {
+    _id: ID
+    uuid: String
+    name: String
+    description: String
+    status: String
+}
+
+input ProjectDeleteInput {
+    uuid: String!
+    reason: String!
+    note: String!
+}
+
+type ProjectList {
+    projects: [Project]
+    hasMore: Boolean
+}
+
+type ProjectItem {
+    name: String
+    description: String
+    price: Pricing
+    quantity: Int
+    createdAt: String
+    updatedAt: String
+    deleted: String
+    deletedAt: String
+    deletedBy: String
+    deletedReason: String
+    deletedNote: String
+    createdBy: String
+    updatedBy: String
+    # category: Category
+    # manufacturer: Manufacturer
+    # uom: Uom
+    # vendors: [Vendor]
+    attachments: [String]
+    width: Float
+    length: Float
+    height: Float
+    maxQuantity: Int
+    minQuantity: Int
+    weight: Float
+    tags: [String]
+    status: String
+    sku: String
+    notes: String
+    type: ProductType
+    serialized: Boolean
+    uuid: String
+    image: String
+    adjusted: Boolean
+    # location: Location
+    # serializedProducts: [SerializedProduct]
+}
+
+type ProjectItemsList {
+    projectItems: [ProjectItem]
+    hasMore: Boolean
+}
+
+input ProjectItemFilters {
+    name: String
+}
+
+type Query {
+  project(uuid: String!): Project
+  projectList(filters: ProjectInput, first: Int, after: Int, textSearchFilters: ProjectInput): ProjectList
+  projectItemsList(projectId: String!, filters: ProjectItemFilters, first: Int, after: Int, textSearchFilters: ProjectItemFilters): ProjectItemsList
+}
+
+type Mutation {
+    projectCreate(project: ProjectInput!): Project
+    projectUpdate(project: ProjectInput!): Project
+    projectDelete(project: ProjectDeleteInput!): Project
+}

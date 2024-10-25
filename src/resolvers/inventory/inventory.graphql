@@ -1,0 +1,62 @@
+input InventoryInput {
+  quantity: Int
+  price: Float
+  description: String
+  category: String
+  image: String
+  _id: ID
+  uuid: String
+  createdBy: String
+  updatedBy: String
+  status: String
+  deletedAt: String
+  deletedBy: String
+  deleted: Boolean
+  deletedReason: String
+  deletedNote: String
+  manufacturer: String
+  vendors: [String]
+}
+
+input InventoryDeleteInput {
+  uuid: String!
+  reason: String!
+  note: String!
+}
+
+type Inventory {
+  quantity: Int
+  price: Float
+  description: String
+  department: String
+  category: String
+  image: String
+  _id: ID
+  uuid: String
+  createdBy: String
+  updatedBy: String
+  status: String
+  deletedAt: String
+  deletedBy: String
+  deleted: Boolean
+  deletedReason: String
+  deletedNote: String
+  manufacturer: String
+  vendors: [String]
+}
+
+type InventoryList {
+    invList: [Inventory]
+    hasMore: Boolean
+}
+
+type Query {
+  inventory(uuid: String!): Inventory
+  inventoryList(filters: InventoryInput, textSearchFilters: InventoryInput): InventoryList
+}
+
+type Mutation {
+  createInventory(inventory: InventoryInput): Inventory
+  updateInventory(inventory: InventoryInput!): Inventory
+  deleteInventory(inventory: InventoryDeleteInput!): Inventory
+}

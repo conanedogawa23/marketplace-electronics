@@ -1,0 +1,462 @@
+type Product {
+    _id: ID
+    name: String!
+    description: String
+    price: Pricing
+    quantity: Int
+    createdAt: String!
+    updatedAt: String!
+    deleted: String
+    deletedAt: String
+    deletedBy: String
+    deletedReason: String
+    deletedNote: String
+    createdBy: String
+    updatedBy: String
+    category: Category
+    manufacturer: Manufacturer
+    uom: Uom
+    vendors: [Vendor]
+    attachments: [FileInfoType]
+    width: Float
+    length: Float
+    height: Float
+    maxQuantity: Int
+    minQuantity: Int
+    weight: Float
+    tags: [String]
+    status: String
+    sku: String
+    notes: String
+    type: ProductType
+    serialized: Boolean
+    uuid: String
+    image: FileInfoType
+    adjusted: Boolean
+    locations: [LocationField]
+    serializedProducts: [SerializedProduct]
+    receiveStockProducts: [ReceiveStockProduct]
+    onUsed: Int
+}
+
+
+type UnauthorizedProductDetails {
+    _id: ID
+    name: String!
+    description: String
+    price: Pricing
+    quantity: Int
+    width: Float
+    length: Float
+    height: Float
+    maxQuantity: Int
+    minQuantity: Int
+    weight: Float
+    tags: [String]
+    status: String
+    sku: String
+    notes: String
+    type: ProductType
+    serialized: Boolean
+    uuid: String
+    image: FileInfoType
+    adjusted: Boolean
+    serializedProducts: [SerializedProduct]
+}
+
+type LocationField {
+    _id: ID
+    name: String
+    description: String
+    createdAt: String
+    updatedAt: String
+    deleted: Boolean
+    deletedAt: String
+    deletedBy: String
+    deletedReason: String
+    deletedNote: String
+    createdBy: String
+    updatedBy: String
+    uuid: String
+    warehouse: Warehouse
+    area: Area
+    rack: Rack
+    shelf: Shelf
+    bin: Bin
+    quantity: Int
+    onUsed: Int
+}
+
+enum ProductType {
+    serialized
+    non_stocked
+    stocked
+    services
+}
+
+input PricingInput {
+    msrp: Float
+    mapp: Float
+    cost: Float
+    sell: Float
+    shippingCost: Float
+    shippingSell: Float
+}
+
+type FileInfoType {
+    url: String,
+    uuid: String,
+    name: String
+    description: String
+    type: String
+}
+
+type Pricing {
+    msrp: Float
+    mapp: Float
+    cost: Float
+    sell: Float
+    shippingCost: Float
+    shippingSell: Float
+    name: String
+    description: String
+    deletedAt: String
+    deletedBy: String
+    deleted: Boolean
+    deletedReason: String
+    deletedNote: String
+    createdAt: String
+    updatedAt: String
+    uuid: String
+    createdBy: String
+    updatedBy: String
+}
+
+input VendorData {
+    id: String
+    price: Float
+}
+
+input ProductInput {
+    _id: ID
+    name: String
+    uuid: String
+    description: String
+    price: PricingInput
+    quantity: Int
+    category: String
+    manufacturer: String
+    uom: String
+    attachments: [String]
+    width: Float
+    height: Float
+    length: Float
+    maxQuantity: Int
+    minQuantity: Int
+    weight: Float
+    tags: [String]
+    status: String
+    serialized: Boolean
+    type: ProductType
+    sku: String
+    notes: String
+    image: String
+    vendors: [VendorData]
+    onUsed: Int
+}
+
+input PricingInputUpdate {
+    uuid: String
+    msrp: Float
+    mapp: Float
+    cost: Float
+    sell: Float
+    shippingCost: Float
+    shippingSell: Float
+}
+
+input ProductInputUpdate {
+    _id: ID
+    name: String
+    uuid: String
+    description: String
+    price: PricingInputUpdate
+    quantity: Int
+    category: String
+    manufacturer: String
+    uom: String
+    vendors: [String]
+    attachments: [String]
+    width: Float
+    height: Float
+    length: Float
+    maxQuantity: Int
+    minQuantity: Int
+    weight: Float
+    tags: [String]
+    status: String
+    serialized: Boolean
+    type: ProductType
+    sku: String
+    notes: String
+    image: String
+    onUsed: Int
+}
+
+input ProductDeleteInput {
+    uuid: String!
+    reason: String!
+    note: String!
+}
+
+type ProductList {
+    products: [Product]
+    hasMore: Boolean
+}
+
+input SerializedProductInput {
+    product: String
+    number: String
+    project: String
+    location: String
+    createdBy: String
+    updatedBy: String
+    deletedBy: String
+    deletedReason: String
+    deletedNote: String
+    deletedAt: String
+    createdAt: String
+    updatedAt: String
+    deleted: Boolean
+    uuid: String
+    status: String
+}
+
+type SerializedProduct {
+    _id: ID
+    product: String
+    number: String
+    project: String
+    locationId: String
+    createdBy: String
+    updatedBy: String
+    deletedBy: String
+    deletedReason: String
+    deletedNote: String
+    deletedAt: String
+    createdAt: String
+    updatedAt: String
+    deleted: Boolean
+    uuid: String
+    status: String
+}
+
+type ReceiveStockProduct {
+    type: String
+    received_quantity: String
+    note: String,
+    location_product: String
+    location: String
+    product: String
+}
+
+type SerializedProductList {
+    serializedProducts: [SerializedProduct]
+    hasMore: Boolean
+}
+
+input UpdateProductSequenceInput {
+    products: [UpdateProductSequenceProductsInput]
+    purchaseOrderId: String
+    activityId: String
+    activityReason: String
+    description: String
+    name: String
+    type: String
+    status: String
+    note: String
+    warehouse: String,
+    destinationWarehouse: String
+}
+
+input UpdateProductSequenceProductsInput {
+    uuid: String!
+    fromLocation: String!
+    toLocation: String!
+    quantity: Int!
+    deleteSerialNumbers: Boolean
+    serialized: Boolean
+    serialNumbers: [String]
+}
+
+type ActivityLogTrack {
+    product: String
+    quantity: Int
+    activityReason: String
+    deleteSerialNumbers: Boolean
+    serialNumbers: [String]
+    fromLocation: String
+    toLocation: String
+    project: String
+}
+
+type ActivityLogList {
+    activityLogs: [ActivityLog]
+    hasMore: Boolean
+}
+
+input ReasonLogInput {
+    description: String
+    name: String
+    status: String
+    createdBy: String
+    updatedBy: String
+    deletedBy: String
+    deletedReason: String
+    deletedNote: String
+    deletedAt: String
+    createdAt: String
+    updatedAt: String
+    deleted: Boolean
+    uuid: String
+}
+
+type ReasonLog {
+    uuid: String
+    description: String
+    name: String
+    createdBy: String
+    updatedBy: String
+    deletedBy: String
+    deletedReason: String
+    deletedNote: String
+    deletedAt: String
+    createdAt: String
+    updatedAt: String
+    deleted: Boolean
+}
+
+type ReasonLogList {
+    reasonLogs: [ReasonLog]
+    hasMore: Boolean
+}
+
+input ActivityLogInput {
+    activityId: String
+    activityReason: String
+    description: String
+    name: String
+    type: String
+    status: String
+    note: String
+    createdBy: String
+    updatedBy: String
+    deletedBy: String
+    deletedReason: String
+    deletedNote: String
+    deletedAt: String
+    createdAt: String
+    updatedAt: String
+    deleted: Boolean
+    reason: String
+    uuid: String
+}
+
+type ActivityLog {
+    uuid: String
+    activityId: String
+    activityReason: String
+    description: String
+    name: String
+    type: String
+    note: String
+    status: String
+    createdAt: String
+    createdBy: String
+    updatedAt: String
+    updatedBy: String
+    deleted: Boolean
+    deletedAt: String
+    deletedBy: String
+    deletedReason: String
+    reason: String
+    deletedNote: String
+    track: [ActivityLogTrack]
+}
+
+type ProjectProduct {
+    product: Product
+    project: Project
+    quantity: Int
+    createdAt: String
+    updatedAt: String
+    createdBy: String
+    updatedBy: String
+    uuid: String
+    deletedAt: String
+    deletedBy: String
+    deleted: Boolean
+    deletedReason: String
+    deletedNote: String
+    status: String
+    allocated: Int
+}
+
+type ActivityLogDetail {
+    uuid: String
+    activityId: String
+    activityReason: String
+    description: String
+    name: String
+    type: String
+    note: String
+    status: String
+    createdAt: String
+    createdBy: String
+    updatedAt: String
+    updatedBy: String
+    deleted: Boolean
+    deletedAt: String
+    deletedBy: String
+    deletedReason: String
+    reason: String
+    deletedNote: String
+    track: [ActivityLogTrack]
+    products: [Product]
+    projectProducts: [ProjectProduct]
+    toLocation: [LocationField]
+    fromLocation: [LocationField]
+    reasonLog: ReasonLog
+    serializedProducts: [SerializedProduct]
+}
+
+type ActivityLogDetailsList {
+    activityLogDetails: [ActivityLogDetail]
+    hasMore: Boolean
+}
+
+type Query {
+  product(uuid: String!): Product
+  productList(first: Int, after: Int, filters: ProductInput): ProductList
+  productFilterList(first: Int, after: Int, filters: ProductInput, textSearchFields: ProductInput): ProductList
+  productTypes: [String]
+  activityLogList(first: Int, after: Int, filters: ActivityLogInput): ActivityLogList
+  activityLogDetails(uuid: String!): ActivityLogDetail
+  activityLogDetailsListAdjust(first: Int, after: Int, filters: ActivityLogInput): ActivityLogDetailsList
+  reasonLogList(first: Int, after: Int, filters: ReasonLogInput, textSearchFields: ReasonLogInput): ReasonLogList
+  serializedProducts(first: Int, after: Int, filters: SerializedProductInput, textSearchFields: SerializedProductInput): SerializedProductList
+  getUnauthorizedProductDetails(uuid: String!, serialNo: String): UnauthorizedProductDetails
+}
+
+type Mutation {
+  createProduct(product: ProductInput!): Product
+  updateProduct(product: ProductInputUpdate!): Product
+  deleteProduct(product: ProductDeleteInput!): Product
+  createSerializedProduct(serializedProduct: SerializedProductInput!): SerializedProduct
+  updateSerializedProduct(serializedProduct: SerializedProductInput!): SerializedProduct
+  deleteSerializedProduct(serializedProduct: SerializedProductInput!): SerializedProduct
+  updateProductSequence(products: UpdateProductSequenceInput!): String
+  createReasonLog(reasonLog: ReasonLogInput!): ReasonLog
+  updateReasonLog(reasonLog: ReasonLogInput!): ReasonLog
+  deleteReasonLog(reasonLog: ReasonLogInput!): ReasonLog
+}

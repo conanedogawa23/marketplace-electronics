@@ -1,0 +1,145 @@
+scalar Upload
+
+input AddressInput {
+  street: String
+  city: String
+  state: String
+  zipCode: String
+  country: String
+}
+
+type Address {
+  street: String
+  city: String
+  state: String
+  zipCode: String
+  country: String
+}
+
+input UserRoleId {
+  uuid: String!
+}
+
+type UserRole {
+  _id: ID # Added as Mongoose uses _id by default
+  name: String
+  uuid: String
+  createdBy: String
+  updatedBy: String
+  status: RoleStatus
+  createdAt: String # Assuming timestamps: true creates these fields
+  updatedAt: String
+}
+
+input RoleInput {
+  name: String
+  createdBy: String
+  status: RoleStatus
+  _id: ID
+  uuid: String
+}
+
+enum RoleStatus {
+  active
+  deleted
+  pending
+  rejected
+}
+
+type Permission {
+  _id: ID
+  uuid: String
+  name: String
+  createdBy: String
+  updatedBy: String
+  module: String
+  status: String
+  feature: String
+  description: String
+  accessLevel: AccessLevels
+  createdAt: String
+  updatedAt: String
+}
+
+input PermissionInput {
+  name: String
+  createdBy: String
+  updatedBy: String
+  module: String
+  status: String
+  feature: String
+  description: String
+  accessLevel: AccessLevels
+  _id: ID
+  uuid: String
+}
+
+enum AccessLevels {
+  read
+  write
+  edit
+  admin
+  delete
+}
+
+type AuthPayload {
+  token: String
+  user: User
+}
+
+enum EmploymentStatus {
+  ACTIVE
+  TERMINATED
+}
+
+type PermissionList {
+  module: String,
+  permissions: [Permission]
+}
+
+type Query {
+  roleList: [UserRole]
+  findRole(_id: UserRoleId!): UserRole
+  permissionList: [PermissionList]
+  findPermission(_id: ID!): Permission
+}
+
+enum ProductType {
+  serialized
+  nonserialized
+  undefined
+}
+
+input SerializeIdsInput {
+  id: String!
+  uuid: String
+}
+
+input QrCodeInput {
+  uuid: String!
+  type: ProductType
+  sku: String!
+  name: String
+  serializeIds: [SerializeIdsInput]
+}
+
+type QrCodeResponse {
+  sku: String
+  uuid: String
+  serialNo: String
+  type: ProductType
+  qrCode: String
+  name: String
+}
+
+type Mutation {
+  uploadInventoryFile(file: Upload!): String
+  generateQRCode(qrInput: [QrCodeInput]!): [QrCodeResponse]
+  createRole(role: RoleInput!): UserRole
+  updateRole(role: RoleInput!): UserRole
+  deleteRole(_id: ID!): UserRole
+  createPermission(permission: PermissionInput!): Permission
+  updatePermission(permission: PermissionInput!): Permission
+  deletePermission(_id: ID!): Permission
+  loginUser(email: String!, password: String!): AuthPayload,
+}

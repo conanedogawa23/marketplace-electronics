@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api_marketplaceminated-backend-dev
+  labels:
+    app: api_marketplaceminated-backend-dev
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: api_marketplaceminated-backend-dev
+  template:
+    metadata:
+      labels:
+        app: api_marketplaceminated-backend-dev
+    spec:
+      containers:
+        - name: api_marketplaceminated-backend-dev
+          image: example.dkr.ecr.us-east-2.amazonaws.com/api_marketplaceminated-backend-dev:1.0.0
+          imagePullPolicy: Always
+          env:
+          - name: APP_ENV
+            value: development
+          - name: DB_URL
+            valueFrom:
+              secretKeyRef:
+                name: database-connection-url-dev
+                key: connectionUrl
+          - name: SECRET_KEY
+            value: sample-secret-key
+          - name: AWS_BUCKET_NAME
+            value: sample-bucket-name
+          - name: AWS_ACCESS_KEY_ID
+            value: SAMPLEACCESSKEYID12345
+          - name: AWS_SECRET_ACCESS_KEY
+            value: SAMPLESECRETACCESSKEY67890
+          - name: JETBUILT_BASE_URL
+            value: https://sample.jetbuilt.com/api/
+          - name: JETBUILT_API_KEY
+            value: sample-api-key-12345
+          - name: JETBUILT_API_VERSION
+            value: application/vnd.sample.v1
+          - name: EXTERNAL_INTEGRATOR_AUTH_TOKEN
+            value: sample-auth-token-98765
+          - name: PLACEHOLDER_USER_UUID
+            value: sample-uuid-1234-5678
+          - name: APP_BASE_URL
+            value: http://sample-app-base-url.com
+          ports:
+            - containerPort: 4000

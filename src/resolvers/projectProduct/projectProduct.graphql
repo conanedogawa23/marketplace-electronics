@@ -1,0 +1,49 @@
+type ProjectProduct {
+    product: Product
+    project: Project
+    quantity: Int
+    createdAt: String
+    updatedAt: String
+    createdBy: String
+    updatedBy: String
+    uuid: String
+    deletedAt: String
+    deletedBy: String
+    deleted: Boolean
+    deletedReason: String
+    deletedNote: String
+    status: String
+    allocated: Int
+    product_location: LocationField
+}
+
+input ProjectProductDeleteInput {
+    uuid: String!
+    reason: String!
+    note: String!
+}
+
+input ProjectProductInput {
+    product: String
+    project: String
+    uuid: String
+    status: String
+    quantity: Int
+    allocated: Int
+}
+
+type ProjectProductList {
+    projectProducts: [ProjectProduct]
+    hasMore: Boolean
+}
+
+type Query {
+    projectProduct(uuid: String!): ProjectProduct
+    projectProductList(first: Int, after: Int, filters: ProjectProductInput): ProjectProductList
+}
+
+type Mutation {
+    projectProductCreate(projectProduct: ProjectProductInput!): ProjectProduct
+    projectProductUpdate(projectProduct: ProjectProductInput!): ProjectProduct
+    projectProductDelete(projectProduct: ProjectProductDeleteInput!): ProjectProduct
+}

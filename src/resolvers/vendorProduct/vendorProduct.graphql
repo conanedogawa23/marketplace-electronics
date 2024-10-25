@@ -1,0 +1,49 @@
+type VendorProduct {
+    _id: ID
+    uuid: String
+    vendor: Vendor
+    product: Product
+    price: Float
+    currency: String
+    createdBy: String
+    updatedBy: String
+    createdAt: String
+    updatedAt: String
+    deleted: Boolean
+    deletedAt: String
+    deletedBy: String
+    deletedReason: String
+    deletedNote: String
+    status: String
+}
+
+input VendorProductInput {
+    _id: ID
+    uuid: String
+    vendor: String
+    product: String
+    price: Float
+    currency: String
+    status: String
+}
+
+input VendorProductDeleteInput {
+    uuid: String!
+    reason: String!
+    note: String!
+}
+
+type VendorProductList {
+    vendorProducts: [VendorProduct]
+    hasMore: Boolean
+}
+
+type Query {
+  vendorProductList(filters: VendorProductInput, first: Int, after: Int): VendorProductList
+}
+
+type Mutation {
+    vendorProductCreate(vendorProduct: VendorProductInput!): VendorProduct
+    vendorProductUpdate(vendorProduct: VendorProductInput!): VendorProduct
+    vendorProductDelete(vendorProduct: VendorProductDeleteInput!): VendorProduct
+}

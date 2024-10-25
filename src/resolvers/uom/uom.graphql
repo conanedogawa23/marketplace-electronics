@@ -1,0 +1,46 @@
+type Uom {
+    _id: ID
+    uuid: String
+    name: String
+    description: String
+    createdAt: String
+    updatedAt: String
+    deleted: Boolean
+    deletedAt: String
+    deletedBy: String
+    deletedReason: String
+    deletedNote: String
+    createdBy: String
+    updatedBy: String
+    status: String
+}
+
+input UomInput {
+    _id: ID
+    uuid: String
+    name: String
+    description: String
+    status: String
+}
+
+input UomDeleteInput {
+    uuid: String!
+    reason: String!
+    note: String!
+}
+
+type UomList {
+    uoms: [Uom]
+    hasMore: Boolean
+}
+
+type Query {
+  uom(uuid: String!): Uom
+  uomList(filters: UomInput, first: Int, after: Int): UomList
+}
+
+type Mutation {
+    uomCreate(uom: UomInput!): Uom
+    uomUpdate(uom: UomInput!): Uom
+    uomDelete(uom: UomDeleteInput!): Uom
+}

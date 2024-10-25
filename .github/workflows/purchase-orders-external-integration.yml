@@ -1,0 +1,16 @@
+name: Purchase Orders External Integration
+
+on:
+  workflow_dispatch:
+
+jobs:
+  call-endpoints:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the repository
+      uses: actions/checkout@v2
+
+    - name: Call first GET endpoint
+      run: |
+        curl -X GET "${{ secrets.API_BASE_URL }}/pull-purchase-orders" -H "x-api-key: ${{ secrets.EXTERNAL_INTEGRATOR_AUTH_TOKEN }}"
